@@ -1,12 +1,8 @@
-import requests
+import json
+from os.path import join, dirname
+from os import environ
+from watson_developer_cloud import VisualRecognitionV3
 
-base_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3'
-my_api_key = "{YOUR_API_KEY_HERE}"
-payload = {'version':'2016-05-20', 'api_key':my_api_key}
+visual_recognition = VisualRecognitionV3('2016-05-20', api_key='{YOUR_API_KEY_HERE}')
 
-classifier_id = "{YOUR_CLASSIFIER_ID_HERE}"
-
-#GET CLASSIFIER DETAILS
-response = requests.get(base_url+'/classifiers/'+classifier_id, params=payload)
-
-print response.content
+print(json.dumps(visual_recognition.get_classifier('YOUR CLASSIFIER ID'), indent=2))

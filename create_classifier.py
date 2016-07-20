@@ -1,19 +1,16 @@
-import requests
+import json
+from os.path import join, dirname
+from os import environ
+from watson_developer_cloud import VisualRecognitionV3
 
-base_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3'
-my_api_key = "{YOUR_API_KEY_HERE}"
-payload = {'version':'2016-05-20', 'api_key':my_api_key}
+visual_recognition = VisualRecognitionV3('2016-05-20', api_key='{YOUR_API_KEY_HERE}')
 
-#A dictionary of the classes we want in the classifier with their zip files
-files = {'hearts_positive_examples':open('hearts.zip'),
-        'diamonds_positive_examples': open('diamonds.zip'),
-        'clubs_positive_examples': open('clubs.zip'),
-        'spades_positive_examples': open('spades.zip')}
-
-classifier_name = {'name':"suits_classifier"}
-
-#CREATE CLASSIFIER
-response = requests.post(base_url + '/classifiers', files=files, \
-    data=classifier_name, params=payload)
-
-print response.content
+with open(join(dirname(__file__), 'hearts.zip'), 'rb') as hearts, \
+    open(join(dirname(__file__), 'diamonds.zip'), 'rb') as diamonds, \
+    open(join(dirname(__file__), 'clubs.zip'), 'rb') as clubs, \
+    open(join(dirname(__file__), 'spades.zip'), 'rb') as spades :
+ print(json.dumps(visual_recognition.create_classifier('Suits', \
+    hearts_positive_examples=hearts, \
+    diamonds_positive_examples=diamonds, \
+    clubs_positive_examples=clubs, \
+    spades_positive_examples=spades), indent=2))

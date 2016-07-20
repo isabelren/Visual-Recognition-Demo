@@ -1,13 +1,9 @@
-import requests
+import json
+from os.path import join, dirname
+from os import environ
+from watson_developer_cloud import VisualRecognitionV3
 
-base_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3'
-my_api_key = "{YOUR_API_KEY_HERE}"
-payload = {'version':'2016-05-20', 'api_key':my_api_key}
+visual_recognition = VisualRecognitionV3('2016-05-20', api_key='{YOUR_API_KEY_HERE}')
 
-classifier_id="{YOUR_CLASSIFIER_ID_HERE}"
-
-#Classify an image
-payload["threshold"]=0
-payload["classifier_ids"]=classifier_id
-image = "test.jpg"
-response = requests.post(base_url+'/classify', params=payload, data=open(image))
+with open(join(dirname(__file__), './test.jpg'), 'rb') as image_file:
+ print(json.dumps(visual_recognition.classify(images_file=image_file, threshold=0.1, classifier_ids=['{YOUR_CLASSIFIER_ID_HERE}']), indent=2))
