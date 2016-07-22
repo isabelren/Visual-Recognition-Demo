@@ -3,7 +3,7 @@ from os.path import join, dirname
 from os import environ
 from watson_developer_cloud import VisualRecognitionV3
 
-visual_recognition = VisualRecognitionV3('2016-05-20', api_key='{YOUR_API_KEY_HERE}')
+visual_recognition = VisualRecognitionV3(VisualRecognitionV3.latest_version, api_key='{YOUR_API_KEY_HERE}')
 
 with open(join(dirname(__file__), 'hearts.zip'), 'rb') as hearts, \
     open(join(dirname(__file__), 'diamonds.zip'), 'rb') as diamonds, \
