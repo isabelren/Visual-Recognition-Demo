@@ -9,6 +9,7 @@ with open(join(dirname(__file__), 'hearts.zip'), 'rb') as hearts, \
     open(join(dirname(__file__), 'diamonds.zip'), 'rb') as diamonds, \
     open(join(dirname(__file__), 'clubs.zip'), 'rb') as clubs, \
     open(join(dirname(__file__), 'spades.zip'), 'rb') as spades :
+ print "Uploading files..."
  print(json.dumps(visual_recognition.create_classifier('Suits', \
     hearts_positive_examples=hearts, \
     diamonds_positive_examples=diamonds, \
